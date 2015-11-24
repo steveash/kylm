@@ -101,7 +101,7 @@ public class AbsoluteSmoother extends NgramSmoother {
 	}
 
 	private void process(NgramNode node, int i, int n) {
-		System.err.println("process("+lm.getNodeName(node)+", "+i+", "+n);
+//		System.err.println("process("+lm.getNodeName(node)+", "+i+", "+n);
 		// if it has no children, nothing to be done
 		if(!node.hasChildren())
 			return;
@@ -128,7 +128,7 @@ public class AbsoluteSmoother extends NgramSmoother {
 			double discount = getDiscount(n, child.getCount());
 			double childScore = (child.getCount()-discount)/sum;
 			realBackoffScore += discount/sum;
-			System.err.println("Setting score for "+lm.getNodeName(child)+" to "+childScore+"("+child.getCount()+" - "+discount+")/"+sum);
+//			System.err.println("Setting score for "+lm.getNodeName(child)+" to "+childScore+"("+child.getCount()+" - "+discount+")/"+sum);
 			if(child.getScore() != NgramNode.TRIM_SCORE) {
 				child.setScore( (float) Math.log10(childScore) );
 				good++;

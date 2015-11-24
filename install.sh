@@ -1,7 +1,7 @@
 #!/bin/sh
 mvn install:install-file -DgroupId=com.github.steveash \
   -DartifactId=kylm \
-  -Dversion=20150421.1 \
+  -Dversion=20151124.1 \
   -Dpackaging=jar \
-  -Dfile=dist/lib/kylm-20150421.jar
+  -Dfile=$PWD/dist/lib/kylm-20151124.1.jar
 
