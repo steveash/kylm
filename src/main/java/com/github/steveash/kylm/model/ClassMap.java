@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Vector;
 
 import com.github.steveash.kylm.util.SymbolSet;
 import com.google.common.collect.Lists;
@@ -100,19 +99,8 @@ public class ClassMap implements Serializable {
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 
         classes = (SymbolSet) in.readObject();
-        Object maybeIds = in.readObject();
-        if (maybeIds instanceof Vector) {
-            idMap = Lists.newArrayList( (Vector)maybeIds);
-        } else {
-            idMap = (List<Integer>) maybeIds;
-        }
-
-        Object maybeProbMap = in.readObject();
-        if (maybeIds instanceof Vector) {
-            probMap = Lists.newArrayList( (Vector) maybeIds);
-        } else {
-            probMap = (List<Float>) maybeProbMap;
-        }
+        idMap = (List<Integer>) in.readObject();
+        probMap = (List<Float>) in.readObject();
     }
 
     public SymbolSet getClasses() {

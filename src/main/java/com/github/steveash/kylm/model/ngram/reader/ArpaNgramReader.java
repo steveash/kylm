@@ -25,8 +25,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,7 +101,7 @@ public class ArpaNgramReader extends NgramReader {
 		 */
         Pattern pat = Pattern.compile("ngram\\s*(\\d+)=\\s*(\\d+)");
         Matcher m = null;
-        Vector<Integer> counts = new Vector<Integer>();
+        List<Integer> counts = new ArrayList<>();
         while ((s = br.readLine()) != null) {
             m = pat.matcher(s);
             if (!m.matches())

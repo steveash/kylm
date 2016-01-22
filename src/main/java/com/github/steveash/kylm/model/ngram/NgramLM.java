@@ -25,10 +25,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Vector;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -271,7 +272,7 @@ public class NgramLM extends LanguageModel implements Serializable {
         }
         // train the unknown models
         if (ukModels != null && ukWords != null) {
-            Vector<LinkedList<String>> ukw = new Vector<LinkedList<String>>(ukModelCount);
+            List<LinkedList<String>> ukw = new ArrayList<>(ukModelCount);
             for (int i = 0; i < ukModelCount; i++)
                 ukw.add(new LinkedList<String>());
             for (String s : ukWords)
@@ -400,7 +401,7 @@ public class NgramLM extends LanguageModel implements Serializable {
      */
     public void expandUnknowns() {
         int unkNext = 0;
-        Vector<Integer> vec = new Vector<Integer>();
+        List<Integer> vec = new ArrayList<Integer>();
         vec.add(vocab.getId(ukSymbol));
         for (NgramNode node : root) {
             while (unkNext < node.id)

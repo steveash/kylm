@@ -36,7 +36,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

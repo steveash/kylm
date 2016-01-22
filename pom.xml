@@ -7,7 +7,7 @@
   <groupId>com.github.steveash.kylm</groupId>
   <artifactId>kylm</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <name>kylm</name>
   <description>KYLM language modelling for java (forked from official repo to make production ready)</description>
   <url>https://github.com/steveash/kylm</url>

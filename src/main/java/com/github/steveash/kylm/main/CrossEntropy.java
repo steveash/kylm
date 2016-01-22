@@ -23,7 +23,8 @@ package com.github.steveash.kylm.main;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.github.steveash.kylm.model.LanguageModel;
 import com.github.steveash.kylm.model.ngram.reader.ArpaNgramReader;
@@ -79,7 +80,7 @@ public class CrossEntropy {
         int debug = config.getInt("debug");
 
         // a vector to hold the models
-        Vector<LanguageModel> models = new Vector<LanguageModel>();
+        List<LanguageModel> models = new ArrayList<>();
 
         // load the arpa files
         String[] arpaFiles = config.getStringArray("arpa");
