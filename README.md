@@ -23,10 +23,17 @@ Iterable<String[]> trainInput = // make "sentences" to train from, each sentence
 lm.trainModel(trainInput);
 ```
 
-You can serialize the `lm` instance and later use it to score candidate sentences like:
+You probably don't want to serialize the `lm` instance and use that to score things at runtime directly, because it isn't thread safe and has some ineffeciencies with large data sets.  You can convert this to a more compact, thread-safe form by
 
 ```java
-lm.getSentenceProbNormalized(gramSeq)
+ImmutableLM safeLm = new ImmutableLMConverter().convert(lm);
+```
+
+The `safeLm` is serializable and safe to use across threads at runtime.  You can get the sentence score by calling:
+
+```java
+List<String> sentence = Arrays.toList("see", "skip", "run");
+double score = lm.sentenceProbNormalized(sentence);
 ```
 
 ## Changes from the original github project
