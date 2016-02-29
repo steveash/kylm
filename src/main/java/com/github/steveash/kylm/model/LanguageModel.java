@@ -47,7 +47,7 @@ import com.github.steveash.kylm.util.SymbolSet;
  *         TODO: allow limitation of vocabulary by size, not only by word frequency
  *         TODO: allow conversion to and from regular/log probabilities
  */
-public abstract class LanguageModel implements Serializable {
+public abstract class LanguageModel implements Serializable, LookupLM {
     private static final Logger log = LoggerFactory.getLogger(LanguageModel.class);
 
     /**
@@ -282,7 +282,7 @@ public abstract class LanguageModel implements Serializable {
     public void importVocabulary(Iterable<String[]> sl) throws IOException {
         log.debug("LanguageModel.importVocabulary(): Started for {}", name);
         // initialize the hash table
-        HashMap<String, Integer> counts = new HashMap<String, Integer>();
+        HashMap<String, Integer> counts = new HashMap<>();
 
         // cycle through the sentences counting the vocabulary
         for (String[] sent : sl) {

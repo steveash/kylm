@@ -162,6 +162,10 @@ public final class BranchNode extends NgramNode {
         childCount = newChildren.size();
     }
 
+    public Vector<NgramNode> getChildrenRaw() {
+        return this.children;
+    }
+
     ///////////////////////////////
     // methods for serialization //
     ///////////////////////////////

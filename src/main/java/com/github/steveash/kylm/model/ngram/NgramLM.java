@@ -546,4 +546,14 @@ public class NgramLM extends LanguageModel implements Serializable {
         result = 31 * result + (ukWords != null ? ukWords.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public double sentenceProbNormalized(List<String> sentence) {
+        return this.getSentenceProbNormalized(sentence.toArray(new String[0]));
+    }
+
+    @Override
+    public double sentenceProb(List<String> sentence) {
+        return this.getSentenceProb(sentence.toArray(new String[0]));
+    }
 }

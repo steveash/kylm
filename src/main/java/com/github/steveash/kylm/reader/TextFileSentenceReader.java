@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import com.github.steveash.kylm.util.KylmTextUtils;
+import com.google.common.base.Throwables;
 
 /**
  * Implementation of a loader that loads from a text file
@@ -112,8 +113,7 @@ public class TextFileSentenceReader implements SentenceReader {
         try {
             return new TFSLIterator(file, divider);
         } catch (IOException e) {
-            e.printStackTrace(System.err);
-            return null;
+            throw new RuntimeException("Cannot iterate over text file " + file, e);
         }
     }
 

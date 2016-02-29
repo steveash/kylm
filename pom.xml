@@ -7,7 +7,7 @@
   <groupId>com.github.steveash.kylm</groupId>
   <artifactId>kylm</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
   <name>kylm</name>
   <description>KYLM language modelling for java (forked from official repo to make production ready)</description>
   <url>https://github.com/steveash/kylm</url>
@@ -46,32 +46,41 @@
   </properties>
 
   <dependencies>
+    <!-- shaded in deps -->
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>17.0</version>
     </dependency>
-    <!--<dependency>-->
-      <!--<groupId>org.apache.commons</groupId>-->
-      <!--<artifactId>commons-lang3</artifactId>-->
-      <!--<version>3.2.1</version>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>com.carrotsearch</groupId>
+      <artifactId>hppc</artifactId>
+      <version>0.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.2.1</version>
+    </dependency>
+
+    <!-- non-shaded, actual dependencies -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+
+    <!-- test deps -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.10</version>
       <scope>test</scope>
-    </dependency>
-    <!--<dependency>-->
-      <!--<groupId>org.mockito</groupId>-->
-      <!--<artifactId>mockito-all</artifactId>-->
-      <!--<version>1.9.0</version>-->
-      <!--<scope>test</scope>-->
-    <!--</dependency>-->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j-version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -79,6 +88,13 @@
       <version>${slf4j-version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.9.0</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -107,6 +123,76 @@
                   src/main/resources/META-INF/MANIFEST.MF
               </manifestFile>
           </archive>-->
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+              <artifactSet>
+                <includes>
+                  <include>com.google.guava:guava</include>
+                  <include>org.apache.commons:commons-lang3</include>
+                  <include>com.carrotsearch:hppc</include>
+                </includes>
+              </artifactSet>
+              <minimizeJar>true</minimizeJar>
+              <relocations>
+                <relocation>
+                  <pattern>com.google.common</pattern>
+                  <shadedPattern>kylmshade.guava</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.carrotsearch.hppc</pattern>
+                  <shadedPattern>kylmshade.hppc</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.apache.commons.lang3</pattern>
+                  <shadedPattern>kylmshade.commonslang3</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.wvengen</groupId>
+        <artifactId>proguard-maven-plugin</artifactId>
+        <version>2.0.11</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>proguard</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <maxMemory>1024m</maxMemory>
+          <!--<attach>true</attach>-->
+          <obfuscate>false</obfuscate>
+          <options>
+            <option>-dontoptimize</option>
+            <!--<option>-keepattributes InnerClasses</option>-->
+            <option>-keep class com.github.steveash.kylm.** { *; }</option>
+          </options>
+          <exclusions>
+            <!--<exclusion>-->
+            <!--<groupId>com.yourcompany</groupId>-->
+            <!--<artifactId>data</artifactId>-->
+            <!--</exclusion>-->
+          </exclusions>
+          <libs>
+            <lib>${java.home}/lib/rt.jar</lib>
+          </libs>
         </configuration>
       </plugin>
       <plugin>
