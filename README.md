@@ -10,7 +10,7 @@ To use this in your project, just use these maven coordinates:
   <groupId>com.github.steveash.kylm</groupId>
   <artifactId>kylm</artifactId>
   <version>1.1.0</version>
-</dependency
+</dependency>
 ```
 
 Then you can train a language model (e.g. 8-order, kneser-ney smoothing) like this:
