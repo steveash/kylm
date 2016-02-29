@@ -9,7 +9,7 @@ To use this in your project, just use these maven coordinates:
 <dependency>
   <groupId>com.github.steveash.kylm</groupId>
   <artifactId>kylm</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency
 ```
 
@@ -30,6 +30,7 @@ lm.getSentenceProbNormalized(gramSeq)
 ```
 
 ## Changes from the original github project
+* Adds an ImmutableLM class and ImmutableLMConverter that allows you to take a trained NGramLM and convert it into an immutable, serializable version that is thread safe for use at runtime
 * Available on Maven Central
 * Doesn't write to stdout/stderr directly for logging, goes through slf4j
 * Uses Java2+ collections instead of Vector (in most places)
@@ -39,7 +40,7 @@ lm.getSentenceProbNormalized(gramSeq)
 Unfortunately, these are all fairly invasive changes, and the original codebase was pretty cold. Thus the fork.
 
 ## Roadmap for additional changes
-* Refactor to make things Thread Safe that should be (and document those that arent)
-* Improve performance by using primitive collections where important
+* ~~Refactor to make things Thread Safe that should be (and document those that arent)~~ _done in 1.1.0_
+* ~~Improve performance by using primitive collections where important~~ _done in 1.1.0_
 * Finish removing the rest of the Vector classes
-* Update the serialization formats for everything. In some places it's building huge strings in memory and then calling writeObject on that. Odd.
+* ~~Update the serialization formats for everything. In some places it's building huge strings in memory and then calling writeObject on that. Odd.~~ _done in 1.1.0_
