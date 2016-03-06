@@ -9,7 +9,7 @@ To use this in your project, just use these maven coordinates:
 <dependency>
   <groupId>com.github.steveash.kylm</groupId>
   <artifactId>kylm</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
 </dependency>
 ```
 
