@@ -7,7 +7,7 @@
   <groupId>com.github.steveash.kylm</groupId>
   <artifactId>kylm</artifactId>
   <packaging>jar</packaging>
-  <version>1.1.1</version>
+  <version>1.1.2</version>
   <name>kylm</name>
   <description>KYLM language modelling for java (forked from official repo to make production ready)</description>
   <url>https://github.com/steveash/kylm</url>
@@ -181,6 +181,7 @@
           <obfuscate>true</obfuscate>
           <options>
             <option>-dontoptimize</option>
+            <option>-keepattributes SourceFile,LineNumberTable</option>
             <!--<option>-keepattributes InnerClasses</option>-->
             <option>-keeppackagenames !kylmshade.**</option>
             <option>-keep class com.github.steveash.kylm.** { *; }</option>

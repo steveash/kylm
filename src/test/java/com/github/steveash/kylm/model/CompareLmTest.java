@@ -1,6 +1,11 @@
 package com.github.steveash.kylm.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,5 +48,26 @@ public class CompareLmTest {
         Assert.assertEquals(c1, c2, 0.001);
     }
 
+    @Test
+    public void shouldWorkWithUnkGrams() throws Exception {
+        NgramLM lm = new NgramLM(3, new KNSmoother());
+        List<String[]> strings = Arrays.asList(
+                new String[]{"s", "t", "e", "v", "e"},
+                new String[]{"s", "t", "r", "i", "p", "v"},
+                new String[]{"r", "i", "p"}
+//                new String[]{"x", "i", "p"}
 
+        );
+        lm.trainModel(strings);
+        ImmutableLM ilm = new ImmutableLMConverter().convert(lm);
+        double prob = ilm.sentenceProb(Arrays.asList("s", "t", "e", "v", "e", "n"));
+        log.info("Steven got " + prob);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        new ObjectOutputStream(baos).writeObject(ilm);
+        ImmutableLM ilm2 = (ImmutableLM) new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
+
+        double prob2 = ilm2.sentenceProb(Arrays.asList("Z"));
+        log.info("StevZn got " + prob2);
+    }
 }

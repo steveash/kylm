@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -362,6 +363,22 @@ public class NgramLM extends LanguageModel implements Serializable {
                 if (vocabCounts[i] > 0) {
                     classMap.setWordProb(i, (float) Math.log10(vocabCounts[i] / (double) classCounts[classMap.getWordClass(i)]));
                 }
+            }
+        }
+        // if there is no root -> unk because the train set is really homogenous go ahead and add one
+        // we're going to assume that the count of unks is 25% of the smallest root -> count (or 1)
+        if (ukModels == null) {
+            NgramNode maybeUnk = root.getChild(2);
+            if (maybeUnk == null) {
+                Vector<NgramNode> childs = root.getChildrenRaw();
+                int minCount = 1;
+                for (int i = 0; i < childs.size(); i++) {
+                    NgramNode ngramNode = childs.get(i);
+                    if (ngramNode == null) continue;
+                    minCount = Math.max(minCount, ngramNode.count);
+                }
+                NgramNode unkChild = root.getChild(2, NgramNode.ADD_LEAF);
+                unkChild.count = Math.max(1, (int) (0.25 * minCount));
             }
         }
         log.info("NgramLM.countNgrams(): Finished for {}", name);

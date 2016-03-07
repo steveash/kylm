@@ -72,9 +72,13 @@ public class ImmutableLM implements Serializable, LookupLM {
             while ((child = context.getChild(idx)) == null) {
                 // add the fallback penalty
                 prob += context.getBackoffScore();
-                context = context.getFallback();
-                if (context == null)
-                    throw new IllegalArgumentException("Could not find word in unigram vocabulary.");
+                ImmutableNode newContext = context.getFallback();
+                if (newContext == null) {
+                    throw new IllegalArgumentException("Could not find word " +
+                            idx + " - " + this.symbols.lookupId(idx) + " in unigram vocabulary while " +
+                            "processing " + sentence + " at " + i);
+                }
+                context = newContext;
             }
             // add the score
             prob += child.getScore();
