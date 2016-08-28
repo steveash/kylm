@@ -440,6 +440,10 @@ public abstract class LanguageModel implements Serializable, LookupLM {
 
     public void setClosed(boolean closed) { this.closed = closed; }
 
+    public void setModelAllWordsAsUnknown(boolean modelAllWords) {
+        this.modelAllWords = modelAllWords;
+    }
+
     public boolean getCountTerminals() {
         return countTerminals;
     }
